@@ -10,7 +10,7 @@ import requests
 
 from qr_decoder import Check
 
-TOKEN = "972745213:AAHv8nz2KAjHI1UUwIsO2VWc7CqMP2r0-nE"
+TOKEN = #your tocken her
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
 help1 = 'Welcome! I will help you to figure out what are you spending money on and how to save them :)'
