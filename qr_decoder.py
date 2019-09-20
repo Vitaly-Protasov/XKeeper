@@ -31,9 +31,9 @@ class Check:
         self.test='t=20190916T2024&s=2074.55&fn=9289000100461638&i=27517&fp=2675576248&n=1'
         
         #user
-        self.name = "Егор"
-        self.phone_number = "+79774395352"
-        self.password = "439537"
+        self.name = #your name
+        self.phone_number = #your phone
+        self.password = #your password
         
     def decode_qr_image(self):
         from pyzbar.pyzbar import decode
