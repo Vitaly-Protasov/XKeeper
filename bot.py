@@ -66,8 +66,11 @@ def reply_to_photo(bot, update):
     
     file_id = document['file_id']
     mime_type = document['mime_type']
+    #that not to download big files
+    now_type = mime_type.split('/')[-1]
+    image_types = ['png', 'jpg', 'jpeg', 'bmp', 'psd']
     
-    if not mime_type.startswith('image'):
+    if (not mime_type.startswith('image') or (now_type not in image_types)):
         update.message.reply_text('I deal with image files only. Try again.')
         
     else:
@@ -125,7 +128,7 @@ def reply_to_photo(bot, update):
         path_to_json = f'/Users/dexp-pc/Desktop/Project/qrs/{client_id}/{exactly_day}/{exactly_time}.json'
         
         check = Check(path_to_image, path_to_json)
-        # если вдруг не смог вытащить инфу и
+        # если вдруг не смог вытащить инфу
         try:
             check.decode_qr_image()
             check.getReceipt()
