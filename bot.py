@@ -10,7 +10,7 @@ import requests
 
 from qr_decoder import Check
 
-TOKEN = #your tocken her
+TOKEN = "972745213:AAHv8nz2KAjHI1UUwIsO2VWc7CqMP2r0-nE"
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
 help1 = 'Welcome! I will help you to figure out what are you spending money on and how to save them :)'
@@ -66,11 +66,8 @@ def reply_to_photo(bot, update):
     
     file_id = document['file_id']
     mime_type = document['mime_type']
-    #that not to download big files
-    now_type = mime_type.split('/')[-1]
-    image_types = ['png', 'jpg', 'jpeg', 'bmp', 'psd']
     
-    if (not mime_type.startswith('image') or (now_type not in image_types)):
+    if not mime_type.startswith('image'):
         update.message.reply_text('I deal with image files only. Try again.')
         
     else:
@@ -128,7 +125,7 @@ def reply_to_photo(bot, update):
         path_to_json = f'/Users/dexp-pc/Desktop/Project/qrs/{client_id}/{exactly_day}/{exactly_time}.json'
         
         check = Check(path_to_image, path_to_json)
-        # если вдруг не смог вытащить инфу
+        # если вдруг не смог вытащить инфу и
         try:
             check.decode_qr_image()
             check.getReceipt()
