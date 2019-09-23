@@ -10,7 +10,7 @@ import requests
 
 from qr_decoder import Check
 
-TOKEN = #your token
+TOKEN = "972745213:AAHv8nz2KAjHI1UUwIsO2VWc7CqMP2r0-nE"
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
 help1 = 'Welcome! I will help you to figure out what are you spending money on and how to save them :)'
@@ -133,7 +133,7 @@ def answer_photo(bot, update):
     
     
     
-def reply_to_photo(bot, update):
+def answer_file(bot, update):
     '''
     Тут мы качаем фото. сохраняем у себя и отправляем на чек
     Обязатель передаём только фото в виде файла.
@@ -249,7 +249,36 @@ def reply_to_photo(bot, update):
         f.close()
         #update.message.reply_text('Done!!!')
         update.message.reply_sticker(STICKER_ID_GJ)
-        
+	
+def day_view(bot, update):
+    client_id = update.message.from_user.id
+    #pprint(update.message.date)
+    text = str(update.message.text).split()[-1] # если пусто, то /day
+    day = str(update.message.date).split()[0]
+
+    if text != '/day':
+        directory_txt = f'/Users/dexp-pc/Desktop/Project/text/{str(client_id)}/{str(text)}.txt'
+        sum = 0
+        try:
+            with open(directory_txt, 'r') as f: 
+                for line in f:
+                    if len((line.split(', ')[2])) > 1:
+                        sum += float(line.split(', ')[2])
+                update.message.reply_text(f'Total amount for {text}: {round(sum,2)}')
+        except:
+            update.message.reply_text('Something went wrong. May be you didn\'t have expenses then?')
+    else:
+        directory_txt = f'/Users/dexp-pc/Desktop/Project/text/{str(client_id)}/{str(day)}.txt'
+        sum = 0
+        try:
+            with open(directory_txt, 'r') as f: 
+                for line in f:
+                    if len((line.split(', ')[2])) > 1:
+                        sum += float(line.split(', ')[2])
+                update.message.reply_text(f'Total amount for {day}: {round(sum,2)}')
+        except:
+            update.message.reply_text('You don\'t have any expenses TODAY!')
+
 
 def main():
     my_bot = Updater(TOKEN)
@@ -257,7 +286,10 @@ def main():
     dp = my_bot.dispatcher
     dp.add_handler(CommandHandler('start', answer))
     dp.add_handler(CommandHandler('help', help))
-    dp.add_handler(MessageHandler(Filters.document, reply_to_photo))
+    dp.add_handler(CommandHandler('day', day_view))
+    
+    
+    dp.add_handler(MessageHandler(Filters.document, answer_file))
     dp.add_handler(MessageHandler(Filters.photo, answer_photo))
     dp.add_handler(MessageHandler(Filters.sticker, send_sticker))
     
