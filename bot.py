@@ -11,26 +11,30 @@ import requests
 
 from qr_decoder import Check
 
-TOKEN = #
+TOKEN = #token
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
 greeting1 = 'I will help you to figure out what are you spending money on and how to save them :)'
 greeting2 = 'Only you need is to send me photo of QR-code in your receipt as an image file or as a photo'
 
 # Сама работа бота
-
-
 def welcome(bot, update):
     user_first_name = update.message.from_user.first_name
-    update.message.reply_text(f'Hello, {user_first_name}! {greeting1}')
-    update.message.reply_text(f'{greeting2}')
+    update.message.reply_text(
+        f'Hello, {user_first_name}! \n' 
+        f'{greeting1} \n'
+        f'{greeting2}')
     pprint(update.message.from_user.__dict__)
     print()
 
 def help(bot, update):
     user_first_name = update.message.from_user.first_name
-    update.message.reply_text(f"Usage: \"/gap week\" - total of this week. \"/gap 10\" - total of the last 10 days.")
-    update.message.reply_text(f"Usage: \"/day\" or \"/day today\" - total of this week. \"/day yyyy-mm-dd\" - total of this exactly day")
+    update.message.reply_text(
+        f"Usage: \n"
+        "/gap week - total of this week \n"
+        "/gap 10 - total of the last 10 days \n"
+        "/day or /day today\" - total of this week \n"
+        "/day yyyy-mm-dd - total of this exactly day \n")
 
     
 def send_sticker(bot,update):
