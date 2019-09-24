@@ -1,6 +1,7 @@
 #!/bin/python3
 from io import BytesIO
 from pprint import pprint
+from datetime import datetime, timedelta
 
 import requests
 from telegram.ext import Updater, CommandHandler, MessageHandler
@@ -13,23 +14,25 @@ from qr_decoder import Check
 TOKEN = "972745213:AAHv8nz2KAjHI1UUwIsO2VWc7CqMP2r0-nE"
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
-help1 = 'Welcome! I will help you to figure out what are you spending money on and how to save them :)'
-help2 = 'Only you need is to send me photo of QR-code in your receipt as an image file or as a photo'
+greeting1 = 'I will help you to figure out what are you spending money on and how to save them :)'
+greeting2 = 'Only you need is to send me photo of QR-code in your receipt as an image file or as a photo'
 
 # Сама работа бота
-def answer(bot, update):
+
+
+def welcome(bot, update):
     user_first_name = update.message.from_user.first_name
-
-    update.message.reply_text(f"Hello, {user_first_name}")
-    pprint(update.message.from_user.__dict__)
-    print()
-
-def help(bot, update):
-    update.message.reply_text(f'{help1}')
-    update.message.reply_text(f'{help2}')
+    update.message.reply_text(f'Hello, {user_first_name}! {greeting1}')
+    update.message.reply_text(f'{greeting2}')
     #pprint(update.message.from_user.__dict__)
     print()
 
+def help(bot, update):
+    user_first_name = update.message.from_user.first_name#
+    update.message.reply_text(f"Usage: \"/gap week\" - total of this week. \"/gap 10\" - total of the last 10 days.")
+    update.message.reply_text(f"Usage: \"/day\" or \"/day today\" - total of this week. \"/day yyyy-mm-dd\" - total of this exactly day")
+
+    
 def send_sticker(bot,update):
     #pprint(update.message.sticker.__dict__)
     sticker_id = update.message.sticker['file_id']
@@ -51,7 +54,7 @@ def answer_photo(bot, update):
 
     file_link = bot.getFile(update.message.photo[-1].file_id)['file_path']
     
-    print("Скачиваю файл...")
+    #print("Скачиваю файл...")
     print()
     
     r = requests.get(file_link)
@@ -61,12 +64,14 @@ def answer_photo(bot, update):
     directory = f'{directory0}{str(exactly_day)}/'
     
     if os.path.exists(directory0):
-        print(f'This client({client_id}) isn\'t the new one')
+        pass
+        #print(f'This client({client_id}) isn\'t the new one')
     else:
         os.mkdir(directory0)
     
     if os.path.exists(directory):
-        print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
+        pass
+        #print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
     else:
         os.mkdir(directory)
         
@@ -88,12 +93,14 @@ def answer_photo(bot, update):
     directory_qr = f'{directory_qr0}{str(exactly_day)}/'
     
     if os.path.exists(directory_qr0):
-        print(f'This client({client_id}) isn\'t the new one')
+        pass
+        #print(f'This client({client_id}) isn\'t the new one')
     else:
         os.mkdir(directory_qr0)
     
     if os.path.exists(directory_qr):
-        print(f'Id:{client_id} and Day:{exactly_day} packages are there (QR)')
+        pass
+        #print(f'Id:{client_id} and Day:{exactly_day} packages are there (QR)')
     else:
         os.mkdir(directory_qr)
     
@@ -116,7 +123,7 @@ def answer_photo(bot, update):
     directory_txt0 = f'/Users/dexp-pc/Desktop/Project/text/{str(client_id)}/'
     directory_txt = f'{directory_txt0}{str(exactly_day)}.txt'
     
-    if os.path.exists(directory_txt0):
+    if os.path.exists(directory_txt0):  
         print(f'This client({client_id}) isn\'t the new one')
     else:
         os.mkdir(directory_txt0)
@@ -180,12 +187,14 @@ def answer_file(bot, update):
         directory = f'{directory0}{str(exactly_day)}/'
     
         if os.path.exists(directory0):
-            print(f'This client({client_id}) isn\'t the new one')
+            pass
+            #print(f'This client({client_id}) isn\'t the new one')
         else:
             os.mkdir(directory0)
     
         if os.path.exists(directory):
-            print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
+            pass
+            #print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
         else:
             os.mkdir(directory)
         
@@ -207,12 +216,14 @@ def answer_file(bot, update):
         directory_qr = f'{directory_qr0}{str(exactly_day)}/'
     
         if os.path.exists(directory_qr0):
-            print(f'This client({client_id}) isn\'t the new one')
+            pass
+            #print(f'This client({client_id}) isn\'t the new one')
         else:
             os.mkdir(directory_qr0)
     
         if os.path.exists(directory_qr):
-            print(f'Id:{client_id} and Day:{exactly_day} packages are there (QR)')
+            pass
+            #print(f'Id:{client_id} and Day:{exactly_day} packages are there (QR)')
         else:
             os.mkdir(directory_qr)
     
@@ -236,7 +247,8 @@ def answer_file(bot, update):
         directory_txt = f'{directory_txt0}{str(exactly_day)}.txt'
     
         if os.path.exists(directory_txt0):
-            print(f'This client({client_id}) isn\'t the new one')
+            pass
+            #print(f'This client({client_id}) isn\'t the new one')
         else:
             os.mkdir(directory_txt0)
 
@@ -256,7 +268,7 @@ def day_view(bot, update):
     text = str(update.message.text).split()[-1] # если пусто, то /day
     day = str(update.message.date).split()[0]
 
-    if text != '/day':
+    if text != '/day' and text != 'today':
         directory_txt = f'/Users/dexp-pc/Desktop/Project/text/{str(client_id)}/{str(text)}.txt'
         sum = 0
         try:
@@ -264,9 +276,9 @@ def day_view(bot, update):
                 for line in f:
                     if len((line.split(', ')[2])) > 1:
                         sum += float(line.split(', ')[2])
-                update.message.reply_text(f'Total amount for {text}: {round(sum,2)}')
+                update.message.reply_text(f'Total amount for {text}:   {round(sum,2)} RUB')
         except:
-            update.message.reply_text('Something went wrong. May be you didn\'t have expenses then?')
+            update.message.reply_text(f'Total amount for {text}:   0 RUB')
     else:
         directory_txt = f'/Users/dexp-pc/Desktop/Project/text/{str(client_id)}/{str(day)}.txt'
         sum = 0
@@ -275,18 +287,72 @@ def day_view(bot, update):
                 for line in f:
                     if len((line.split(', ')[2])) > 1:
                         sum += float(line.split(', ')[2])
-                update.message.reply_text(f'Total amount for {day}: {round(sum,2)}')
+                update.message.reply_text(f'Total amount for TODAY:   {round(sum,2)} RUB')
         except:
-            update.message.reply_text('You don\'t have any expenses TODAY!')
+            update.message.reply_text(f'Total amount for TODAY:   0 RUB')
 
+def gap_view(bot, update):
+    #client_id = update.message.from_user.id
+    day_today = datetime.today()
+    text = str(update.message.text).split()[-1] #если пусто, то /gap
+    sum = 0
+
+    def amount(days):
+        for i in range(int(text)):
+            day_delta = timedelta(days = i)
+            day = day_today - day_delta
+            path = f'/Users/dexp-pc/Desktop/Project/text/374202690/{str(day).split()[0]}.txt'
+
+            if os.path.exists(path):
+                with open(path, 'r') as f:
+                    for line in f:
+                        if len((line.split(', ')[2])) > 1:
+                            sum += float(line.split(', ')[2])
+            else:
+                sum += 0
+        update.message.reply_text(f'Total amount for the last {text} days:   {round(sum,2)} RUB')
+
+
+    if text != '/gap':
+        for i in range(int(text)):
+            day_delta = timedelta(days = i)
+            day = day_today - day_delta
+            path = f'/Users/dexp-pc/Desktop/Project/text/374202690/{str(day).split()[0]}.txt'
+
+            if os.path.exists(path):
+                with open(path, 'r') as f:
+                    for line in f:
+                        if len((line.split(', ')[2])) > 1:
+                            sum += float(line.split(', ')[2])
+            else:
+                sum += 0
+        update.message.reply_text(f'Total amount for the last {text} days:   {round(sum,2)} RUB')
+    else:
+        for i in range(7):
+            day_delta = timedelta(days = i)
+            day = day_today - day_delta
+            path = f'/Users/dexp-pc/Desktop/Project/text/374202690/{str(day).split()[0]}.txt'
+
+            if os.path.exists(path):
+                with open(path, 'r') as f:
+                    for line in f:
+                        if len((line.split(', ')[2])) > 1:
+                            sum += float(line.split(', ')[2])
+            else:
+                sum += 0
+        update.message.reply_text(f'Total amount for the last week:   {round(sum,2)} RUB')
+
+def month_view(bot, update):
+    pass
 
 def main():
     my_bot = Updater(TOKEN)
 
     dp = my_bot.dispatcher
-    dp.add_handler(CommandHandler('start', answer))
+    dp.add_handler(CommandHandler('start', welcome))
     dp.add_handler(CommandHandler('help', help))
     dp.add_handler(CommandHandler('day', day_view))
+    dp.add_handler(CommandHandler('gap', gap_view))
     
     
     dp.add_handler(MessageHandler(Filters.document, answer_file))
