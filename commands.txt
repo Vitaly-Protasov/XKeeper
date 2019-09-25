@@ -1,0 +1,3 @@
+help - Info about commands usage
+day - Info of your expenses for a certain day.
+gap - Info of your expenses for a certain week.
