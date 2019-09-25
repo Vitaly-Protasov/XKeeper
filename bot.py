@@ -21,7 +21,7 @@ greeting2 = 'Only you need is to send me photo of QR-code in your receipt as an 
 def welcome(bot, update):
     user_first_name = update.message.from_user.first_name
     update.message.reply_text(
-        f'Hello, {user_first_name}! \n' 
+        f'Hello, {user_first_name}! \n\n' 
         f'{greeting1} \n'
         f'{greeting2}')
     pprint(update.message.from_user.__dict__)
@@ -30,7 +30,7 @@ def welcome(bot, update):
 def help(bot, update):
     user_first_name = update.message.from_user.first_name
     update.message.reply_text(
-        f"Usage: \n"
+        f"Usage: \n\n"
         "/gap week - total of this week \n"
         "/gap 10 - total of the last 10 days \n"
         "/day or /day today\" - total of the day \n"
