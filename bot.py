@@ -18,19 +18,23 @@ greeting1 = 'I will help you to figure out what are you spending money on and ho
 greeting2 = 'Only you need is to send me photo of QR-code in your receipt as an image file or as a photo'
 
 # Сама работа бота
-
-
 def welcome(bot, update):
     user_first_name = update.message.from_user.first_name
-    update.message.reply_text(f'Hello, {user_first_name}! {greeting1}')
-    update.message.reply_text(f'{greeting2}')
-    #pprint(update.message.from_user.__dict__)
+    update.message.reply_text(
+        f'Hello, {user_first_name}! \n' 
+        f'{greeting1} \n'
+        f'{greeting2}')
+    pprint(update.message.from_user.__dict__)
     print()
 
 def help(bot, update):
-    user_first_name = update.message.from_user.first_name#
-    update.message.reply_text(f"Usage: \"/gap week\" - total of this week. \"/gap 10\" - total of the last 10 days.")
-    update.message.reply_text(f"Usage: \"/day\" or \"/day today\" - total of this week. \"/day yyyy-mm-dd\" - total of this exactly day")
+    user_first_name = update.message.from_user.first_name
+    update.message.reply_text(
+        f"Usage: \n"
+        "/gap week - total of this week \n"
+        "/gap 10 - total of the last 10 days \n"
+        "/day or /day today\" - total of the day \n"
+        "/day yyyy-mm-dd - total of this exactly day \n")
 
     
 def send_sticker(bot,update):
@@ -44,6 +48,7 @@ def answer_photo(bot, update):
     # Тут говно
     date_of_photo = update.message.date
     date_of_photo = str(date_of_photo).split(' ')
+    pprint(update.message.photo)
     global exactly_day
     global exactly_time
     global client_id
@@ -52,9 +57,9 @@ def answer_photo(bot, update):
     exactly_time = '-'.join(exactly_time[i] for i in range(0,len(exactly_time)))
     client_id = update.message.from_user.id
 
-    file_link = bot.getFile(update.message.photo[-1].file_id)['file_path']
-    
-    #print("Скачиваю файл...")
+    file_link = bot.getFile(update.message.photo[0].file_id)['file_path']
+    print(file_link)
+    print("Скачиваю файл...")
     print()
     
     r = requests.get(file_link)
@@ -74,8 +79,7 @@ def answer_photo(bot, update):
         #print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
     else:
         os.mkdir(directory)
-        
-        
+
     #уже создаём само фото с названием в виде дня
     global path_to_file 
     path_to_file = f"{directory}{exactly_time}.{file_link.split('/')[-1].split('.')[-1]}"
@@ -100,40 +104,55 @@ def answer_photo(bot, update):
     
     if os.path.exists(directory_qr):
         pass
-        #print(f'Id:{client_id} and Day:{exactly_day} packages are there (QR)')
+        #print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
     else:
         os.mkdir(directory_qr)
-    
+
     path_to_json = f'/Users/dexp-pc/Desktop/Project/qrs/{client_id}/{exactly_day}/{exactly_time}.json'
-        
+    
     check = Check(path_to_image, path_to_json)
     # если вдруг не смог вытащить инфу
     try:
-        check.decode_qr_image()
-        check.getReceipt()
-        check.parse()
+            check.decode_qr_image()
     except:
-        update.message.reply_text('Something went wrong :( Try another photo please!')
-            
+            update.message.reply_text('Decode error')
+    try:    
+            check.getReceipt()
+    except:
+            update.message.reply_text('getReceipt error')
+    try:   
+            check.parse()
+    except:
+            update.message.reply_text('parse error')
+
     spisok = check.psrint()
-        
     #=======================text
         
     # define the name of the directory to be created and checking their status at DB
     directory_txt0 = f'/Users/dexp-pc/Desktop/Project/text/{str(client_id)}/'
     directory_txt = f'{directory_txt0}{str(exactly_day)}.txt'
     
-    if os.path.exists(directory_txt0):  
-        print(f'This client({client_id}) isn\'t the new one')
+    if os.path.exists(directory_txt0):
+        pass
+        #print(f'This client({client_id}) isn\'t the new one')
     else:
         os.mkdir(directory_txt0)
-
+    
+    
     f = open(directory_txt, 'a')
+
+    msg = ""
     for product, price in spisok:
-        update.message.reply_text(f"{product} {price}")
+        #msg += f'{exactly_day}, {product}, {price}\n'
+        for i in range(len(product.split())):
+            if not product.split()[i][0].isdigit():
+                msg += f'{product.split()[i]} '
+            f.write(f'{exactly_day}, {msg}, {price}\n')
+
+        msg += f'{price} RUB\n'
             
-        f.write(f'{exactly_day}, {product}, {price}\n')
             
+    update.message.reply_text(f"{msg}")
     f.close()
     #update.message.reply_text('Done!!!')
     update.message.reply_sticker(STICKER_ID_GJ)
@@ -176,7 +195,7 @@ def answer_file(bot, update):
         file_path = requests.get(file_info_link).json()['result']['file_path']
         file_link = f'https://api.telegram.org/file/bot{TOKEN}/{file_path}'
         #file = requests.get(file_link).content
-        
+        print(file_link)
         print("Скачиваю файл...")
         print()
     
@@ -228,15 +247,22 @@ def answer_file(bot, update):
             os.mkdir(directory_qr)
     
         path_to_json = f'/Users/dexp-pc/Desktop/Project/qrs/{client_id}/{exactly_day}/{exactly_time}.json'
-        
+        print(path_to_json)
         check = Check(path_to_image, path_to_json)
         # если вдруг не смог вытащить инфу
         try:
             check.decode_qr_image()
+        except:
+            update.message.reply_text('Decode error')
+        try:    
             check.getReceipt()
+        except:
+            update.message.reply_text('getReceipt error')
+        try:   
             check.parse()
         except:
-            update.message.reply_text('Something went wrong :( Try another photo please!')
+            update.message.reply_text('parse error')
+        
             
         spisok = check.psrint()
         
@@ -253,12 +279,19 @@ def answer_file(bot, update):
             os.mkdir(directory_txt0)
 
         f = open(directory_txt, 'a')
+        msg = ""
         for product, price in spisok:
-            update.message.reply_text(f"{product} {price}")
+            #msg += f'{exactly_day}, {product}, {price}\n'
+            for i in range(len(product.split())):
+                if not product.split()[i][0].isdigit():
+                    msg += f'{product.split()[i]} '
             
-            f.write(f'{exactly_day}, {product}, {price}\n')
+            msg += f'{price} RUB\n'
             
-        f.close()
+            f.write(f'{exactly_day}, {msg}, {price}\n')
+
+        update.message.reply_text(f"{msg}")
+            
         #update.message.reply_text('Done!!!')
         update.message.reply_sticker(STICKER_ID_GJ)
 	
@@ -292,7 +325,7 @@ def day_view(bot, update):
             update.message.reply_text(f'Total amount for TODAY:   0 RUB')
 
 def gap_view(bot, update):
-    #client_id = update.message.from_user.id
+    client_id = update.message.from_user.id
     day_today = datetime.today()
     text = str(update.message.text).split()[-1] #если пусто, то /gap
     sum = 0
@@ -301,7 +334,7 @@ def gap_view(bot, update):
         for i in range(int(text)):
             day_delta = timedelta(days = i)
             day = day_today - day_delta
-            path = f'/Users/dexp-pc/Desktop/Project/text/374202690/{str(day).split()[0]}.txt'
+            path = f'/Users/dexp-pc/Desktop/Project/text/{client_id}/{str(day).split()[0]}.txt'
 
             if os.path.exists(path):
                 with open(path, 'r') as f:
@@ -317,7 +350,7 @@ def gap_view(bot, update):
         for i in range(int(text)):
             day_delta = timedelta(days = i)
             day = day_today - day_delta
-            path = f'/Users/dexp-pc/Desktop/Project/text/374202690/{str(day).split()[0]}.txt'
+            path = f'/Users/dexp-pc/Desktop/Project/text/{client_id}/{str(day).split()[0]}.txt'
 
             if os.path.exists(path):
                 with open(path, 'r') as f:
@@ -331,7 +364,7 @@ def gap_view(bot, update):
         for i in range(7):
             day_delta = timedelta(days = i)
             day = day_today - day_delta
-            path = f'/Users/dexp-pc/Desktop/Project/text/374202690/{str(day).split()[0]}.txt'
+            path = f'/Users/dexp-pc/Desktop/Project/text/{client_id}/{str(day).split()[0]}.txt'
 
             if os.path.exists(path):
                 with open(path, 'r') as f:
