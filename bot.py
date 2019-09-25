@@ -11,7 +11,7 @@ import requests
 
 from qr_decoder import Check
 
-TOKEN = #token
+TOKEN = "972745213:AAHv8nz2KAjHI1UUwIsO2VWc7CqMP2r0-nE"
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
 greeting1 = 'I will help you to figure out what are you spending money on and how to save them :)'
@@ -33,7 +33,7 @@ def help(bot, update):
         f"Usage: \n"
         "/gap week - total of this week \n"
         "/gap 10 - total of the last 10 days \n"
-        "/day or /day today\" - total of this week \n"
+        "/day or /day today\" - total of the day \n"
         "/day yyyy-mm-dd - total of this exactly day \n")
 
     
@@ -48,6 +48,7 @@ def answer_photo(bot, update):
     # Тут говно
     date_of_photo = update.message.date
     date_of_photo = str(date_of_photo).split(' ')
+    pprint(update.message.photo)
     global exactly_day
     global exactly_time
     global client_id
@@ -56,7 +57,7 @@ def answer_photo(bot, update):
     exactly_time = '-'.join(exactly_time[i] for i in range(0,len(exactly_time)))
     client_id = update.message.from_user.id
 
-    file_link = bot.getFile(update.message.photo[-1].file_id)['file_path']
+    file_link = bot.getFile(update.message.photo[0].file_id)['file_path']
     print(file_link)
     print("Скачиваю файл...")
     print()
@@ -137,18 +138,21 @@ def answer_photo(bot, update):
     else:
         os.mkdir(directory_txt0)
     
-    if os.path.exists(directory_txt):
-        pass
-        #print(f'Id:{client_id} and Day:{exactly_day} packages are there (PHOTO)')
-    else:
-        os.mkdir(directory_txt)
-
+    
     f = open(directory_txt, 'a')
+
+    msg = ""
     for product, price in spisok:
-        update.message.reply_text(f"{product} {price}")
+        #msg += f'{exactly_day}, {product}, {price}\n'
+        for i in range(len(product.split())):
+            if not product.split()[i][0].isdigit():
+                msg += f'{product.split()[i]} '
+            f.write(f'{exactly_day}, {msg}, {price}\n')
+
+        msg += f'{price} RUB\n'
             
-        f.write(f'{exactly_day}, {product}, {price}\n')
             
+    update.message.reply_text(f"{msg}")
     f.close()
     #update.message.reply_text('Done!!!')
     update.message.reply_sticker(STICKER_ID_GJ)
@@ -275,12 +279,19 @@ def answer_file(bot, update):
             os.mkdir(directory_txt0)
 
         f = open(directory_txt, 'a')
+        msg = ""
         for product, price in spisok:
-            update.message.reply_text(f"{product} {price}")
+            #msg += f'{exactly_day}, {product}, {price}\n'
+            for i in range(len(product.split())):
+                if not product.split()[i][0].isdigit():
+                    msg += f'{product.split()[i]} '
             
-            f.write(f'{exactly_day}, {product}, {price}\n')
+            msg += f'{price} RUB\n'
             
-        f.close()
+            f.write(f'{exactly_day}, {msg}, {price}\n')
+
+        update.message.reply_text(f"{msg}")
+            
         #update.message.reply_text('Done!!!')
         update.message.reply_sticker(STICKER_ID_GJ)
 	

@@ -31,9 +31,9 @@ class Check:
         self.test='t=20190916T2024&s=2074.55&fn=9289000100461638&i=27517&fp=2675576248&n=1'
         
         #user
-        self.name = #your name
-        self.phone_number = #your phone
-        self.password = #your password
+        self.name = "Hleb"
+        self.phone_number = "+79056202225"
+        self.password = "784579"
         
     def decode_qr_image(self):
         from pyzbar.pyzbar import decode
@@ -90,11 +90,12 @@ class Check:
             f"{self.url}{inns_kkts_fss}{fn}{tickets}{i}{fiscal}{fp}{send_email}",
             headers=self.headers,
             auth=(self.phone_number, self.password))
-
+        
         f = open(self.path_to_json, 'wb')
         f.write(ans_gr.content)
         f.close()
-        
+        #pprint(ans_er.content)
+
     def parse(self):
         import json
         
@@ -114,3 +115,4 @@ class Check:
         return spisok
         #for product, price in spisok:
         #    print(f"{product} {price}")
+    
