@@ -9,15 +9,19 @@ from telegram.ext.filters import Filters
 import os
 import requests
 
+import telebot
+from telebot import types
+
 from qr_decoder import Check
 
-TOKEN = #your token
+TOKEN = "972745213:AAHv8nz2KAjHI1UUwIsO2VWc7CqMP2r0-nE"
 STICKER_ID_GJ = 'CAADAgADJQAD--ADAAFr8LUIKr_oHxYE'
 
 greeting1 = 'I will help you to figure out what are you spending money on and how to save them :)'
 greeting2 = 'Only you need is to send me photo of QR-code in your receipt as an image file or as a photo'
 
 # Сама работа бота
+
 def welcome(bot, update):
     user_first_name = update.message.from_user.first_name
     update.message.reply_text(
@@ -33,8 +37,10 @@ def help(bot, update):
         f"Usage: \n\n"
         "/gap week - total of this week \n"
         "/gap 10 - total of the last 10 days \n"
-        "/day or /day today\" - total of the day \n"
-        "/day yyyy-mm-dd - total of this exactly day \n")
+        "/day or \"/day today\" - total of the day \n"
+        "/day yyyy-mm-dd - total of this exactly day \n"
+        "/categories - total for today\n"
+        "/categories yyyy-mm-dd - total for exactly day \n")
 
     
 def send_sticker(bot,update):
@@ -140,20 +146,22 @@ def answer_photo(bot, update):
     
     
     f = open(directory_txt, 'a')
-
     msg = ""
+    msg_file = ""
     for product, price in spisok:
+        msg_file += f'{exactly_day}, '
         #msg += f'{exactly_day}, {product}, {price}\n'
         for i in range(len(product.split())):
             if not product.split()[i][0].isdigit():
                 msg += f'{product.split()[i]} '
-            f.write(f'{exactly_day}, {msg}, {price}\n')
-
+                msg_file += f'{product.split()[i]} '
         msg += f'{price} RUB\n'
             
-            
-    update.message.reply_text(f"{msg}")
+        f.write(f'{msg_file}, {price}\n')
+        msg_file = ""
     f.close()
+    update.message.reply_text(f"{msg}")
+            
     #update.message.reply_text('Done!!!')
     update.message.reply_sticker(STICKER_ID_GJ)
     
@@ -280,16 +288,19 @@ def answer_file(bot, update):
 
         f = open(directory_txt, 'a')
         msg = ""
+        msg_file = ""
         for product, price in spisok:
+            msg_file += f'{exactly_day}, '
             #msg += f'{exactly_day}, {product}, {price}\n'
             for i in range(len(product.split())):
                 if not product.split()[i][0].isdigit():
                     msg += f'{product.split()[i]} '
-            
+                    msg_file += f'{product.split()[i]} '
             msg += f'{price} RUB\n'
             
-            f.write(f'{exactly_day}, {msg}, {price}\n')
-
+            f.write(f'{msg_file}, {price}\n')
+            msg_file = ""
+        f.close()
         update.message.reply_text(f"{msg}")
             
         #update.message.reply_text('Done!!!')
@@ -308,7 +319,7 @@ def day_view(bot, update):
             with open(directory_txt, 'r') as f: 
                 for line in f:
                     if len((line.split(', ')[2])) > 1:
-                        sum += float(line.split(', ')[2])
+                        sum += float(line.split(', ')[-1])
                 update.message.reply_text(f'Total amount for {text}:   {round(sum,2)} RUB')
         except:
             update.message.reply_text(f'Total amount for {text}:   0 RUB')
@@ -378,6 +389,50 @@ def gap_view(bot, update):
 def month_view(bot, update):
     pass
 
+def categories(bot, update):
+    client_id = update.message.from_user.id
+    day_today = datetime.today()
+    text = str(update.message.text).split()[-1] # если пусто, то /categories
+    
+    if text in ('/categories','today'):
+        text = str(update.message.date).split()[0]
+
+    path_expens = f'/Users/dexp-pc/Desktop/Project/text/{client_id}/{text}.txt'
+    path_cat = f'/Users/dexp-pc/Desktop/Project/XKeeper/categories.txt'
+    f_expens = open(path_expens, 'r')
+    f_cat = open(path_cat, 'r', encoding = 'utf-8')
+
+    expens = []
+    cat = []
+
+    categories = {'alcohol': 0, 'transport': 0, 'bread' : 0, 'fastfood' : 0, 'fish' : 0, 
+    'fruits' : 0, 'groceries' : 0, 'meat' : 0, 'milk' : 0, 'sweets' : 0, 'vegetables' : 0,
+    'others' : 0, 'sweet' : 0}
+
+    for line_e in f_expens:
+        expens.append(line_e.split(', '))
+    for line_c in f_cat:
+        cat.append(line_c.split(', '))
+
+    for e in expens:
+        price_e = e[2]
+        word_e = e[1][:4].lower().split()[0]
+    
+        for c in cat:
+            label = c[0]
+            word_c = c[1][:4].lower().split()[0]
+        
+            if word_e == word_c:
+                categories[label] += round(float(price_e),2)
+            
+    pprint(categories)
+
+    cate_list = ""      
+    for i in categories.items():
+        cate_list += f"{i[0].title()}: {round(i[1],2)}\n"
+    update.message.reply_text(f'{cate_list}')
+
+    
 def main():
     my_bot = Updater(TOKEN)
 
@@ -386,7 +441,7 @@ def main():
     dp.add_handler(CommandHandler('help', help))
     dp.add_handler(CommandHandler('day', day_view))
     dp.add_handler(CommandHandler('gap', gap_view))
-    
+    dp.add_handler(CommandHandler('categories', categories))
     
     dp.add_handler(MessageHandler(Filters.document, answer_file))
     dp.add_handler(MessageHandler(Filters.photo, answer_photo))
