@@ -40,13 +40,15 @@ def help(bot, update):
         "/day or \"/day today\" - total of the day \n"
         "/day yyyy-mm-dd - total of this exactly day \n"
         "/categories - total for today\n"
-        "/categories yyyy-mm-dd - total for exactly day \n")
+        "/categories yyyy-mm-dd - total for this exactly day \n")
 
     
 def send_sticker(bot,update):
     #pprint(update.message.sticker.__dict__)
     sticker_id = update.message.sticker['file_id']
     update.message.reply_sticker(sticker_id)
+
+    print(sticker_id)
     update.message.reply_text(f"Пока умею только дублировать твой стикер.")
     
     
@@ -119,18 +121,11 @@ def answer_photo(bot, update):
     check = Check(path_to_image, path_to_json)
     # если вдруг не смог вытащить инфу
     try:
-            check.decode_qr_image()
+        check.decode_qr_image()
+        check.getReceipt()
+        check.parse()
     except:
-            update.message.reply_text('Decode error')
-    try:    
-            check.getReceipt()
-    except:
-            update.message.reply_text('getReceipt error')
-    try:   
-            check.parse()
-    except:
-            update.message.reply_text('parse error')
-
+        update.message.reply_text('Smth went wrong. Try to send it as a file. Otherwise we do not know what to do:(')
     spisok = check.psrint()
     #=======================text
         
@@ -260,17 +255,11 @@ def answer_file(bot, update):
         # если вдруг не смог вытащить инфу
         try:
             check.decode_qr_image()
-        except:
-            update.message.reply_text('Decode error')
-        try:    
             check.getReceipt()
-        except:
-            update.message.reply_text('getReceipt error')
-        try:   
             check.parse()
         except:
-            update.message.reply_text('parse error')
-        
+            update.message.reply_text('Smth went wrong. Try to send it as a file. Otherwise we do not know what to do:(')
+    
             
         spisok = check.psrint()
         
@@ -405,9 +394,9 @@ def categories(bot, update):
     expens = []
     cat = []
 
-    categories = {'alcohol': 0, 'transport': 0, 'bread' : 0, 'fastfood' : 0, 'fish' : 0, 
-    'fruits' : 0, 'groceries' : 0, 'meat' : 0, 'milk' : 0, 'sweets' : 0, 'vegetables' : 0,
-    'others' : 0, 'sweet' : 0}
+    categories = {'alcohol': 0, 'bread' : 0, 'fastfood' : 0, 'fish' : 0, 'fruits' : 0, 'groceries' : 0,
+     'meat' : 0, 'milk' : 0, 'others' : 0, 'sweets' : 0,
+     'sweet' : 0, 'transport': 0, 'vegetables' : 0}
 
     for line_e in f_expens:
         expens.append(line_e.split(', '))

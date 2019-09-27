@@ -1,0 +1,271 @@
+alcohol, вино
+alcohol, пиво
+alcohol, водка
+alcohol, шампанское
+alcohol, ликёр
+alcohol, текила
+alcohol, коньяк
+alcohol, винный напиток
+alcohol, абсент
+alcohol, виски
+transport, ТАРИФ
+transport, Сервис
+bread, хлеб
+bread, хлебцы
+bread, батон нарезной в/с
+bread, батон
+bread, макароны
+fastfood, бургер
+fastfood, бургер комбо
+fastfood, чизбургер
+fastfood, шаурма
+fastfood, шаверма
+fastfood, картофель фри
+fastfood, картошка фри
+fastfood, крылышки куриные
+fastfood, хот-дог
+fastfood, ролл
+fish, хек
+fish, семга
+fish, горбуша
+fish, креветки
+fish, королевские креветки
+fish, мидии
+fish, кальмары
+fish, палтус
+fish, мойва
+fish, сардины
+fish, шпроты
+fish, уклейка
+fish, сом
+fish, карась
+fish, икра
+fish, форель
+fish, треска
+fish, сельдь
+fish, сёмга
+fish, рыба
+fish, рыбный
+fish, лосось
+fruits, апельсины
+fruits, яблоки
+fruits, инжир
+fruits, грейпфрут
+fruits, груши
+fruits, бананы
+fruits, персики
+fruits, арбикосы
+fruits, виноград
+fruits, гранат
+fruits, мандарины
+fruits, киви
+fruits, ананас
+fruits, манго
+fruits, авокадо
+fruits, малина
+fruits, клубника
+fruits, вишня
+fruits, черешня
+fruits, крыжовник
+fruits, голубика
+fruits, черника
+fruits, облепиха
+fruits, клюква
+fruits, морошка
+fruits, слива
+fruits, кокос
+fruits, фейхоа
+fruits, чернослив
+fruits, изюм
+fruits, курага
+groceries, гречка
+groceries, рис
+groceries, мак. изделия макфа
+groceries, рис басмати
+groceries, полба
+groceries, крупа полбяная
+groceries, макароны
+groceries, спагетти
+groceries, гречневая крупа
+groceries, овсяная
+groceries, манная
+groceries, крахмал
+groceries, пшеница
+groceries, хлопья
+groceries, каша
+groceries, манная каша
+groceries, рисовая каша
+groceries, пшеничная каша
+groceries, гречневая каша
+groceries, овсяные хлопья
+groceries, отруби
+groceries, лапша
+groceries, витки
+groceries, ролтон
+groceries, доширак
+groceries, вермишель фунчоза сэн
+groceries, вермишель
+groceries, горох
+meat, колбаса
+meat, ветчина
+meat, курица
+meat, колбаса
+meat, колбасное изделие
+meat, докторская
+meat, шпикачки
+meat, куриные котлеты
+meat, котлеты
+meat, мясо
+meat, мясные
+meat, говядина
+meat, свинина
+meat, индейка
+meat, бедро
+meat, ножки
+meat, грудка
+meat, колбаса юбилейная макфа
+meat, филе
+meat, папа может
+meat, сервелат
+milk, молоко первымбзмж
+milk, молоко
+milk, мацорни
+milk, кумыс
+milk, катык
+milk, бифилайф
+milk, сливки
+milk, сыр
+milk, йогурт
+milk, творог
+milk, сметана
+milk, кефир
+milk, ряженка
+milk, масло сливочное
+milk, масло шоколадное
+milk, творожная масса
+milk, снежок
+milk, напиток молочный
+milk, мороженое
+milk, сырок
+sweet, шокололад
+sweet, конфеты
+sweet, сникерс
+sweet, батончик
+sweet, печенье
+sweet, пряники
+sweet, десерт
+sweet, сгущенка
+sweet, марс
+sweet, сникерс
+sweet, твикс
+sweet, баунти
+sweet, конфеты ассорти
+sweet, булочка с маком
+sweet, булочка с конфитюром
+sweet, шоколадная паста
+sweet, вафли яшкино
+sweet, конфеты батончики
+sweet, вафли
+sweet, козинак
+sweet, карамель
+sweet, сок
+sweet, Пирог Австрийский штрудель
+sweet, шоколад аленка
+vegetables, огурцы
+vegetables, морковь
+vegetables, картофель молодой вес
+vegetables, лук репчатый
+vegetables, морковь мытая вес
+vegetables, баклажаны
+vegetables, кабачки
+vegetables, тыква
+vegetables, лук порей
+vegetables, сельдерей
+vegetables, корень сельдерея
+vegetables, кукуруза
+vegetables, капуста
+vegetables, цветная капуста
+vegetables, брокколи
+vegetables, салат
+vegetables, петрушка
+vegetables, укроп
+vegetables, базилик
+vegetables, томаты
+vegetables, помидоры
+vegetables, редиска
+vegetables, перец
+vegetables, репа
+vegetables, репка
+vegetables, дайкон
+vegetables, пастернак
+vegetables, горох
+vegetables, нут
+vegetables, фасоль
+vegetables, бобы
+vegetables, кольраби
+vegetables, патиссоны
+vegetables, спаржа
+vegetables, ревень
+vegetables, щавель
+vegetables, шпинат
+vegetables, чеснок
+others, мыло
+others, Полотенца
+others, чистящее средство
+others, чай
+others, Гель
+others, кофе мол. в/сорт м/у 100 г.
+others, мочалка -шар цвет в асс СЛ
+sweet, СНИКЕРС СУПЕР 95Г
+fastfood, ВАРЕНИКИ КАРТ.0, 5КГ
+meat, ШПИКАЧКИ ДЛЯ ЗАВТРАК
+fish, СЕМГА С/С 100Г/КД
+fastfood, БЛИНЫ С ТВОРОГОМ 140
+groceries, ИЗД.РЖ-ПШ НАР.520ГР
+milk, СЫР БРЕСТ ЛИТОВ
+fastfood, КП/БЛИНЫ СО СГУЩЕНКО
+fastfood, БЛИНЫ С ТВОРОГОМ 140
+meat, КП/БЛИНЫ С МЯСОМ
+milk, МАССА МОСКОВСКАЯ 180
+groceries, КРУАСС.260Г КАКАО
+milk, МОЛ СГУЩ ВОЛОК 370ГР
+meat, КОЛБ.СЕРВ.В/К КРЕМЛ.
+milk, МОЛОКО ПАСТ 3, 4..4, 5
+others, ГУБКА Д/П МАКСИ 10ШТ
+others, Д/ЧИСТ.ТРУБ SANFOR
+others, ТУАЛ.БУМ.ЗЕВА ПЛЮС Я
+groceries, Рис АГРО-АЛЬЯНС Экстра д/плова в/с 900г
+fruits, Яблоки Гренни Смит вес 1кг
+fruits, Бананы вес 1кг
+groceries, Хлеб ЗАО ЩЕЛКОВОХЛЕБ Ржевский нар уп340
+milk, Творог ПРОСТОКВАШИНО Классич 9% 220г
+meat, Блинчики МОРОЗКО с вет и сыр 210г
+fish, Хек 365 ДНЕЙ тушка  с/м 900г
+meat, Блинчики МОРОЗКО с мясом 210г
+milk, Масло БРЕСТ-ЛИТОВСК 82, 5% 180г
+meat, Котлеты МОРОЗКО с мясом мол бычков 450г
+meat, П/ф Говядина мясо д/бульон б/к кат.В вес
+others, Т/мыло CAMAY Динамик 85г
+others, Т/мыло CAMAY Мадемуазель 85г
+others, Т/мыло CAMAY Романтик 85г
+others, JACOBS Monarch Кофе натур жар в зернах 230г м/у
+fastfood, Лапша с Курицей 1 порц.
+others, Чай черный стандартный 1 порц.
+groceries, ХЛОПЬЯ ОВСЯНЫЕ ГЕРКУЛЕС 500Г Р
+meat, КОЛБАСА БАЛЫКОВАЯ ПО ЧЕРКИЗОВС
+meat, СОСИСКИ ПРЕМИУМ С НАТ.СЛИВКАМИ
+milk, БЗМЖ МОЛОКО ДВД ДЕРЕВЕНСК. ОТБ
+milk, БЗМЖ БИОЙОГУРТ СЛОБОДА С ВИШНЕ
+milk, БЗМЖ БИОЙОГУРТ СЛОБОДА С КЛУБН
+milk, БЗМЖ БИОЙОГУРТ СЛОБОДА С ПЕРСИ
+fruits, СЛИВА ВЕС
+sweet, КОНФЕТЫ ХАЛВА ГЛАЗИРОВАННАЯ РО
+sweet, ВАФЛИ ЯШКИНО ГЛАЗИРОВАННЫЕ С О
+sweet, ЧЕРЕМУШКИ Пирог Австрийский штрудель вишня-ванил
+others, Body Break Мочалка-шар цвет в асс СЛ(Еврокос Хол
+sweet, АЗОВСКАЯ КФ Козинак Арахисовый 170г флоупак(Азов
+others, LEBO Кофе мол. в/сорт м/у 100г (Продукт Сервис):
+others, Игрушка в саше "Скрепыш" (ЦФО): 200/2400
+others, FAIRY Ср-во д/мыт пос СочнЛим/АпелЛимон 450мл(Пр
+others, TIRET Turbo 500мл(Бенкизер):6
+vegetables, МОРКОВЬ мытая 1кг
