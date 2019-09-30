@@ -7,5 +7,5 @@ All that you need is to send picture of qr code at receipt (Send as a file or as
 It looks like this:
 
 <p align="center">
-  <img src="https://github.com/Vitaly-Protasov/XKeeper/blob/master/workable_prototype.gif?raw=true" width="300" title="hover text">
+  <img src="https://github.com/Vitaly-Protasov/XKeeper/blob/master/workable_prorotype.gif" width="300" title="hover text">
 </p>
